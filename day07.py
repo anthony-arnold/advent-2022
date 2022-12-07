@@ -17,6 +17,8 @@ if __name__ == '__main__':
                 else:
                     d.append(e)
         else:
+            # This will actually fail if 'ls' is called on the same directory twice
+            # but that didn't happen for my input.
             x = d.copy()
             while len(x):
                 f = '/'.join(x)
