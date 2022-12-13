@@ -84,13 +84,8 @@ if __name__ == "__main__":
     codes += [[[2]], [[6]]]
 
     order = sorted(codes, key=cmp_to_key(compare))
+    z = 1
     for i,packet in enumerate(order):
-        if packet == [[2]]:
-            y = i + 1
-        elif packet == [[6]]:
-            z = i + 1
-
-    print(y * z)
-
-    
-
+        if packet == [[2]] or packet == [[6]]:
+            z *= i + 1
+    print(z)
