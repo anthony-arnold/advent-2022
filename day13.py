@@ -36,12 +36,6 @@ def parse(line):
     elems.append(i)
     return elems, r+1
 
-def aslist(e):
-    if isinstance(e, list):
-        return e
-    return [e]
-
-
 def compare(left, right):
     if isinstance(left, list) and isinstance(right, list):
         for i in range(min(len(left), len(right))):
@@ -89,3 +83,6 @@ if __name__ == "__main__":
         if packet == [[2]] or packet == [[6]]:
             z *= i + 1
     print(z)
+
+    
+
