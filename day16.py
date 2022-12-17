@@ -70,6 +70,31 @@ def dfs(pressure, paths, visited=set(), time=30, valve='AA'):
             m = x
     return n + m
 
+
+def all_soln(paths):
+    def go(valve, time, visited, incr):
+        for v, d in paths[valve]:
+            if v in visited:
+                continue
+            if time - d <= 0:
+                continue
+
+            yield from go(v, time - d, visited | {v}, incr + [v])
+        yield incr
+    
+    yield from go('AA', 26, {'AA'}, [])
+
+
+def value(order, pressure, paths, time=26):
+    src = 'AA'
+    v = 0
+    for dst in order:
+        d = paths[(src, dst)]
+        time -= d
+        v += time * pressure[dst]
+        src = dst
+    return v
+
 if __name__ == '__main__':
     pressure = {}
     adj = {}
@@ -93,4 +118,26 @@ if __name__ == '__main__':
         lookup[src] += [(dst, d)]
 
     print(dfs(pressure, lookup))
+    
+    unique = set(frozenset(i) for i in all_soln(lookup))
+    
+    memo = {}
+    for v in unique:
+        memo[v] = 0
+        for p in itertools.permutations(v):
+            memo[v] = max(memo[v], value(p, pressure, paths))
+
+    m = 0
+    disjoint = []
+    ul = list(unique)
+    for i in range(len(ul)):
+        d = []
+        k = ul[i]
+        for j in range(i+1, len(ul)):
+            if k.isdisjoint(ul[j]):
+                disjoint.append((k, ul[j]))
+
+    for s1, s2 in disjoint:
+        m = max(m, memo[s1] + memo[s2])
+    print(m)
     
