@@ -1,15 +1,14 @@
 import sys 
 from itertools import zip_longest
+from functools import reduce
 
 def val(c):
     if c == '=':
         return -2
     elif c == '-':
         return -1
-    elif c is None:
-        return 0
     else:
-        return int(c)
+        return 0 if c is None else int(c)
     
 def add(a, b):
     s = ''
@@ -41,7 +40,4 @@ def add(a, b):
     return ''.join(reversed(s)) 
 
 if __name__ == '__main__':    
-    snafu = '0'
-    for line in sys.stdin:
-        snafu = add(snafu, line.strip())
-    print(snafu)
+    print(reduce(add, (l.strip() for l in sys.stdin), '0'))
