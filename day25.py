@@ -26,7 +26,7 @@ def add(a, b):
             s += str(w)
         elif w > 2:
             carry = 1 
-            s += "-=0"[5 - w - 1]
+            s += "0-="[5 - w]
             
         elif w < -2:
             carry = -1
